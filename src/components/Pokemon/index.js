@@ -8,6 +8,7 @@ import {
     TextField,
     CircularProgress,
     Typography,
+    useMediaQuery,
     styled,
 } from "@mui/material";
 
@@ -17,12 +18,12 @@ import { IconSearch } from "../../assets/icons/Icons";
 // project imports
 import PokemonCard from "./PokemonCard";
 
-const PaperWrapper = styled(Paper)(() => ({
+const PaperWrapper = styled(Paper)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "70vw",
-    height: "90%",
+    width: useMediaQuery(theme.breakpoints.down("md")) ? "100%" : "70%",
+    height: useMediaQuery(theme.breakpoints.down("md")) ? "100%" : "90%",
 }));
 
 const Pokemon = () => {
@@ -79,6 +80,7 @@ const Pokemon = () => {
                     direction="column"
                     justifyContent="space-evenly"
                     alignItems="center"
+                    wrap="nowrap"
                 >
                     <Grid item>
                         <TextField

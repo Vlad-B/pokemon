@@ -12,6 +12,8 @@ import {
     ListItem,
     ListItemIcon,
     Tooltip,
+    useTheme,
+    useMediaQuery,
     styled,
 } from "@mui/material";
 
@@ -34,6 +36,7 @@ const PokemonIdContainer = styled(Box)(() => ({
     backgroundColor: "#a386da",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
+    border: "1px solid #a386da",
     color: "#fff",
 }));
 
@@ -46,17 +49,22 @@ const PokemonNameContainer = styled(Box)(() => ({
     backgroundColor: "#f3effd",
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
+    border: "1px solid #a386da",
     color: "#6d6a72",
-    textTransform: "capitalize",
 }));
 
 const PokemonCard = ({ pokemon }) => {
+    const theme = useTheme();
+    const matchesMdDown = useMediaQuery(theme.breakpoints.down("md"));
+    const capitalize = (string) =>
+        string.charAt(0).toUpperCase() + string.slice(1);
+
     const spriteGIF = `${pokemon.sprites.versions["generation-v"]["black-white"].animated.front_default}`;
-    const pokemonName = pokemon.name;
-    const pokemonId = String(pokemon.id).padStart(3, 0);
+    const pokemonName = capitalize(pokemon.name);
+    const pokemonId = pokemon.id.toString().padStart(3, 0);
     const height = pokemon.height;
     const weight = pokemon.weight;
-    const species = pokemon.species.name;
+    const species = capitalize(pokemon.species.name);
     const stats = pokemon.stats.map((data) => ({
         name: data.stat.name,
         baseStat: data.base_stat,
@@ -111,8 +119,7 @@ const PokemonCard = ({ pokemon }) => {
             sx={{
                 backgroundColor: "#ede3ff",
                 color: "#6d6a72",
-                minWidth: 320,
-                width: 600,
+                minWidth: 300,
                 ":hover": {
                     boxShadow: 8,
                 },
@@ -145,24 +152,28 @@ const PokemonCard = ({ pokemon }) => {
                     </Box>
                 </Stack>
                 <Divider />
-                <Stack direction="row" justifyContent="space-around">
+                <Stack
+                    direction={matchesMdDown ? "column" : "row"}
+                    justifyContent="space-around"
+                >
                     <List
                         sx={{
-                            width: "40%",
+                            width: matchesMdDown ? "100%" : "40%",
                             fontWeight: "bold",
                             fontSize: "18px",
                         }}
                     >
                         <ListItem>Height: {height}</ListItem>
                         <ListItem>Weight: {weight}</ListItem>
-                        <ListItem sx={{ textTransform: "capitalize" }}>
-                            Species: {species}
-                        </ListItem>
+                        <ListItem>Species: {species}</ListItem>
                     </List>
-                    <Divider flexItem orientation="vertical" />
+                    <Divider
+                        flexItem
+                        orientation={matchesMdDown ? "horizontal" : "vertical"}
+                    />
                     <List
                         sx={{
-                            width: "50%",
+                            width: matchesMdDown ? "100%" : "40%",
                             display: "flex",
                             flexWrap: "wrap",
                             justifyContent: "space-between",
