@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // material-ui imports
 import {
@@ -37,21 +37,33 @@ const Pokemon = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (pokemonName.length === 0) {
+            setMessage("Please enter a Pokemon name.");
+            return setPokemonData(null);
+        }
+
         setIsLoading(true);
         const response = await fetch(
             `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`,
             { method: "GET" }
         );
         if (!response.ok) {
+            setMessage(`Pokemon "${pokemonName}" does not exist.`);
             setIsLoading(false);
-            setMessage("We couldn't find a pokemon with that name.");
             return new Error("No Pokemon found");
         }
         const data = await response.json();
         setPokemonData(data);
-        setIsLoading(false);
         setPokemonName("");
+        setIsLoading(false);
     };
+
+    useEffect(() => {
+        const resetMessage = setTimeout(() => {
+            setMessage("Search for your favourite Pokemon.");
+        }, 4000);
+        return () => clearTimeout(resetMessage);
+    }, [message]);
 
     return (
         <PaperWrapper elevation={1}>
