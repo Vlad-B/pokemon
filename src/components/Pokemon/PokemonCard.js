@@ -27,6 +27,9 @@ import {
     IconSpecialDef,
 } from "../../assets/icons/Icons";
 
+// project
+import { capitalize } from "../../utils/helpers";
+
 const PokemonIdContainer = styled(Box)(() => ({
     width: 250,
     height: 50,
@@ -56,9 +59,6 @@ const PokemonNameContainer = styled(Box)(() => ({
 const PokemonCard = ({ pokemon }) => {
     const theme = useTheme();
     const matchesMdDown = useMediaQuery(theme.breakpoints.down("md"));
-    const capitalize = (string) =>
-        string.charAt(0).toUpperCase() + string.slice(1);
-
     const spriteGIF = `${pokemon.sprites.versions["generation-v"]["black-white"].animated.front_default}`;
     const pokemonName = capitalize(pokemon.name);
     const pokemonId = pokemon.id.toString().padStart(3, 0);

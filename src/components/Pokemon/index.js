@@ -16,6 +16,7 @@ import {
 import { IconSearch } from "../../assets/icons/Icons";
 
 // project imports
+import { alphaNumeric } from "../../utils/helpers";
 import PokemonCard from "./PokemonCard";
 
 const PaperWrapper = styled(Paper)(({ theme }) => ({
@@ -40,6 +41,11 @@ const Pokemon = () => {
         event.preventDefault();
         if (pokemonName.length === 0) {
             setMessage("Please enter a Pokemon name.");
+            return setPokemonData(null);
+        }
+
+        if (!alphaNumeric(pokemonName)) {
+            setMessage("Special characters are not allowed.");
             return setPokemonData(null);
         }
 
