@@ -6,8 +6,9 @@ import {
     Box,
     Grid,
     TextField,
-    styled,
     CircularProgress,
+    Typography,
+    styled,
 } from "@mui/material";
 
 // assets
@@ -28,6 +29,9 @@ const Pokemon = () => {
     const [pokemonData, setPokemonData] = useState(null);
     const [pokemonName, setPokemonName] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [message, setMessage] = useState(
+        "Search for your favourite Pokemon."
+    );
 
     const handleFieldChange = ({ target }) => setPokemonName(target.value);
 
@@ -40,6 +44,7 @@ const Pokemon = () => {
         );
         if (!response.ok) {
             setIsLoading(false);
+            setMessage("We couldn't find a pokemon with that name.");
             return new Error("No Pokemon found");
         }
         const data = await response.json();
@@ -51,7 +56,7 @@ const Pokemon = () => {
     return (
         <PaperWrapper elevation={1}>
             <Box
-                sx={{ width: "80%", height: "100%" }}
+                sx={{ width: "80%", height: "80%" }}
                 component="form"
                 onSubmit={handleSubmit}
             >
@@ -65,7 +70,6 @@ const Pokemon = () => {
                 >
                     <Grid item>
                         <TextField
-                            size="small"
                             label="Pokemon Name"
                             placeholder="Search..."
                             value={pokemonName}
@@ -74,6 +78,13 @@ const Pokemon = () => {
                                 startAdornment: <IconSearch position="end" />,
                             }}
                         />
+                    </Grid>
+                    <Grid item>
+                        {!isLoading && !pokemonData && (
+                            <Typography sx={{ color: "#aaa" }} variant="h4">
+                                {message}
+                            </Typography>
+                        )}
                     </Grid>
 
                     <Grid item>
