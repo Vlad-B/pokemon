@@ -65,6 +65,7 @@ const PokemonCard = ({ pokemon }) => {
     const height = pokemon.height;
     const weight = pokemon.weight;
     const species = capitalize(pokemon.species.name);
+    const gamePresence = pokemon.game_indices.length;
     const stats = pokemon.stats.map((data) => ({
         name: data.stat.name,
         baseStat: data.base_stat,
@@ -150,6 +151,7 @@ const PokemonCard = ({ pokemon }) => {
                             <Typography variant="h5">{pokemonName}</Typography>
                         </PokemonNameContainer>
                     </Box>
+                    <Typography>{`${pokemonName} has appeared in ${gamePresence} games.`}</Typography>
                 </Stack>
                 <Divider />
                 <Stack
