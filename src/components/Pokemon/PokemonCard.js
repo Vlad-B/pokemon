@@ -91,13 +91,17 @@ const PokemonCard = ({ pokemon }) => {
                 tooltipTitle = "Speed";
         }
         return (
-            <ListItem key={stat.name} sx={{ width: "fit-content" }}>
+            <ListItem key={stat.name} sx={{ m: 0, width: "fit-content" }}>
                 <Tooltip title={tooltipTitle} placement="top">
-                    <ListItemIcon sx={{ minWidth: "24px", pr: 2 }}>
-                        {icon}
-                    </ListItemIcon>
+                    <Stack direction="row">
+                        <ListItemIcon sx={{ minWidth: "24px", pr: 2 }}>
+                            {icon}
+                        </ListItemIcon>
+                        <Typography fontWeight="bold">
+                            {stat.baseStat}
+                        </Typography>
+                    </Stack>
                 </Tooltip>
-                <Typography>{stat.baseStat}</Typography>
             </ListItem>
         );
     });
@@ -142,7 +146,13 @@ const PokemonCard = ({ pokemon }) => {
                 </Stack>
                 <Divider />
                 <Stack direction="row" justifyContent="space-around">
-                    <List sx={{ width: "40%" }}>
+                    <List
+                        sx={{
+                            width: "40%",
+                            fontWeight: "bold",
+                            fontSize: "18px",
+                        }}
+                    >
                         <ListItem>Height: {height}</ListItem>
                         <ListItem>Weight: {weight}</ListItem>
                         <ListItem sx={{ textTransform: "capitalize" }}>
