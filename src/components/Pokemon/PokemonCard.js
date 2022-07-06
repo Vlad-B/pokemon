@@ -51,18 +51,18 @@ const PokemonNameContainer = styled(Box)(() => ({
 }));
 
 const PokemonCard = ({ pokemon }) => {
-    const spriteGIF = `${pokemon?.sprites.versions["generation-v"]["black-white"].animated.front_default}`;
-    const pokemonName = pokemon?.name;
-    const pokemonId = String(pokemon?.id).padStart(3, 0);
-    const height = pokemon?.height;
-    const weight = pokemon?.weight;
-    const species = pokemon?.species.name;
-    const stats = pokemon?.stats.map((data) => ({
+    const spriteGIF = `${pokemon.sprites.versions["generation-v"]["black-white"].animated.front_default}`;
+    const pokemonName = pokemon.name;
+    const pokemonId = String(pokemon.id).padStart(3, 0);
+    const height = pokemon.height;
+    const weight = pokemon.weight;
+    const species = pokemon.species.name;
+    const stats = pokemon.stats.map((data) => ({
         name: data.stat.name,
         baseStat: data.base_stat,
     }));
 
-    const statsList = stats?.map((stat) => {
+    const statsList = stats.map((stat) => {
         let icon;
         let tooltipTitle;
         switch (stat.name) {

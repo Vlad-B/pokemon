@@ -45,16 +45,22 @@ const Pokemon = () => {
         const data = await response.json();
         setPokemonData(data);
         setIsLoading(false);
+        setPokemonName("");
     };
 
     return (
         <PaperWrapper elevation={1}>
-            <Box sx={{ width: "80%" }} component="form" onSubmit={handleSubmit}>
+            <Box
+                sx={{ width: "80%", height: "100%" }}
+                component="form"
+                onSubmit={handleSubmit}
+            >
                 <Grid
+                    sx={{ height: "100%" }}
                     container
                     spacing={3}
                     direction="column"
-                    justifyContent="center"
+                    justifyContent="space-evenly"
                     alignItems="center"
                 >
                     <Grid item>
@@ -69,13 +75,13 @@ const Pokemon = () => {
                             }}
                         />
                     </Grid>
-                    {isLoading ? (
-                        <CircularProgress />
-                    ) : (
-                        <Grid item>
+
+                    <Grid item>
+                        {isLoading && <CircularProgress />}
+                        {!isLoading && pokemonData && (
                             <PokemonCard pokemon={pokemonData} />
-                        </Grid>
-                    )}
+                        )}
+                    </Grid>
                 </Grid>
             </Box>
         </PaperWrapper>
