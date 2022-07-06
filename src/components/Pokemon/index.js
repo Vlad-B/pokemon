@@ -5,14 +5,16 @@ import {
     Paper,
     Box,
     Grid,
-    Stack,
-    Card,
     TextField,
     styled,
+    CircularProgress,
 } from "@mui/material";
 
 // assets
 import { IconSearch } from "../../assets/icons/Icons";
+
+// project imports
+import PokemonCard from "./PokemonCard";
 
 const PaperWrapper = styled(Paper)(() => ({
     display: "flex",
@@ -20,30 +22,33 @@ const PaperWrapper = styled(Paper)(() => ({
     alignItems: "center",
     width: "70vw",
     height: "90%",
-    ":hover": {
-        boxShadow: 16,
-    },
 }));
 
 const Pokemon = () => {
-    const [pokemonData, setPokemonData] = useState({});
+    const [pokemonData, setPokemonData] = useState(null);
     const [pokemonName, setPokemonName] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleFieldChange = ({ target }) => setPokemonName(target.value);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
         const response = await fetch(
             `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`,
             { method: "GET" }
         );
-        if (!response.ok) return new Error("No Pokemon found");
+        if (!response.ok) {
+            setIsLoading(false);
+            return new Error("No Pokemon found");
+        }
         const data = await response.json();
         setPokemonData(data);
+        setIsLoading(false);
     };
 
     return (
-        <PaperWrapper elevation={8}>
+        <PaperWrapper elevation={1}>
             <Box sx={{ width: "80%" }} component="form" onSubmit={handleSubmit}>
                 <Grid
                     container
@@ -64,6 +69,13 @@ const Pokemon = () => {
                             }}
                         />
                     </Grid>
+                    {isLoading ? (
+                        <CircularProgress />
+                    ) : (
+                        <Grid item>
+                            <PokemonCard pokemon={pokemonData} />
+                        </Grid>
+                    )}
                 </Grid>
             </Box>
         </PaperWrapper>
