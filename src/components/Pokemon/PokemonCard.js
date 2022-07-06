@@ -105,6 +105,8 @@ const PokemonCard = ({ pokemon }) => {
     return (
         <Card
             sx={{
+                backgroundColor: "#ede3ff",
+                color: "#6d6a72",
                 minWidth: 320,
                 width: 600,
                 ":hover": {
